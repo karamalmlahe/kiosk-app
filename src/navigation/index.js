@@ -1,13 +1,13 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 
-import {MaterialCommunityIcons} from "react-native-vector-icons/MaterialCommunityIcons"
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
 
 //Screens
-import DashboardScreen from "./../screens/dashboard";
-import CardScreen from "./../screens/card";
-import StoresScreen from "./../screens/stores";
-import MenuScreen from "./../screens/menu";
+import {DashboardScreen,screenOptions as DashboardScreenOptions} from "./../screens/dashboard";
+import {CartScreen,screenOptions as CartScreenOptions} from "./../screens/cart";
+import {StoresScreen,screenOptions as StoresScreenOptions} from "./../screens/stores";
+import {MenuScreen,screenOptions as MenuScreenOptions} from "./../screens/menu";
 
 //Stacks
 const DashboardStackNavigation = createStackNavigator();
@@ -22,7 +22,7 @@ const TabsBottomNavigation = createMaterialBottomTabNavigator();
 export const DashboardStack=()=>{
     return(
         <DashboardStackNavigation.Navigator>
-            <DashboardStackNavigation.Screen name="Dashboard" component={DashboardScreen}/>
+            <DashboardStackNavigation.Screen name="Dashboard" component={DashboardScreen} options={DashboardScreenOptions}/>
         </DashboardStackNavigation.Navigator>
     )
 }
@@ -32,7 +32,7 @@ export const DashboardStack=()=>{
 export const CardStack=()=>{
     return(
         <CardStackNavigation.Navigator>
-            <CardStackNavigation.Screen name="Card" component={CardScreen}/>
+            <CardStackNavigation.Screen name="Cart" component={CartScreen} options={CartScreenOptions}/>
         </CardStackNavigation.Navigator>
     )
 }
@@ -42,7 +42,7 @@ export const CardStack=()=>{
 export const StoresStack=()=>{
     return(
         <StoreStackNavigation.Navigator>
-            <StoreStackNavigation.Screen name="Stores" component={StoresScreen}/>
+            <StoreStackNavigation.Screen name="Stores" component={StoresScreen} options={StoresScreenOptions}/>
         </StoreStackNavigation.Navigator>
     )
 }
@@ -52,7 +52,7 @@ export const StoresStack=()=>{
 export const MenuStack=()=>{
     return(
         <MenuStackNavigation.Navigator>
-            <MenuStackNavigation.Screen name="Menu" component={MenuScreen}/>
+            <MenuStackNavigation.Screen name="Menu" component={MenuScreen} options={MenuScreenOptions}/>
         </MenuStackNavigation.Navigator>
     )
 }
@@ -65,11 +65,19 @@ const Tab = createMaterialBottomTabNavigator();
 //Tap Material Bottom UI
 export const BottomTab=()=>{
     return(
-        <Tab.Navigator>
-            <Tab.Screen name="DashboardTab" component={DashboardStack} options={{tabBarLabel:"Dashboard"}}/>
-            <Tab.Screen name="CardTab" component={CardStack} options={{tabBarLabel:"Card"}}/>
-            <Tab.Screen name="StoresTab" component={StoresStack} options={{tabBarLabel:"Stores"}}/>
-            <Tab.Screen name="MenuTab" component={MenuStack} options={{tabBarLabel:"Menu"}}/>
+        <Tab.Navigator shifting>
+            <Tab.Screen name="DashboardTab" component={DashboardStack} options={{tabBarLabel:"Dashboard",tabBarIcon: () => (
+            <MaterialCommunityIcons name="view-dashboard" size={26} />
+          )}}  />
+            <Tab.Screen name="CartTab" component={CardStack} options={{tabBarLabel:"Cart",tabBarIcon: () => (
+            <MaterialCommunityIcons name="cart" size={26} />
+          )}}/>
+            <Tab.Screen name="StoresTab" component={StoresStack} options={{tabBarLabel:"Stores",tabBarIcon: () => (
+            <MaterialCommunityIcons name="storefront" size={26} />
+          )}}/>
+            <Tab.Screen name="MenuTab" component={MenuStack} options={{tabBarLabel:"Menu",tabBarIcon: () => (
+            <MaterialCommunityIcons name="menu" size={26} />
+          )}}/>
         </Tab.Navigator>
     )
 }
