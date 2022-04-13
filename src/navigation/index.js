@@ -1,6 +1,7 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 
+//icons
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
 
 //Screens
@@ -66,17 +67,17 @@ const Tab = createMaterialBottomTabNavigator();
 export const BottomTab=()=>{
     return(
         <Tab.Navigator shifting>
-            <Tab.Screen name="DashboardTab" component={DashboardStack} options={{tabBarLabel:"Dashboard",tabBarIcon: () => (
-            <MaterialCommunityIcons name="view-dashboard" size={26} />
+            <Tab.Screen name="DashboardTab" component={DashboardStack} options={{tabBarLabel:"Dashboard",tabBarIcon: ({color}) => (
+            <MaterialCommunityIcons name="view-dashboard" size={26} color={color} />
           )}}  />
-            <Tab.Screen name="CartTab" component={CardStack} options={{tabBarLabel:"Cart",tabBarIcon: () => (
-            <MaterialCommunityIcons name="cart" size={26} />
+            <Tab.Screen name="StoresTab" component={StoresStack} options={{tabBarLabel:"Stores",tabBarIcon: ({color}) => (
+            <MaterialCommunityIcons name="storefront" size={26} color={color} />
           )}}/>
-            <Tab.Screen name="StoresTab" component={StoresStack} options={{tabBarLabel:"Stores",tabBarIcon: () => (
-            <MaterialCommunityIcons name="storefront" size={26} />
+            <Tab.Screen name="CartTab" component={CardStack} options={{tabBarLabel:"Cart",tabBarIcon: ({color}) => (
+            <MaterialCommunityIcons name="cart" size={26} color={color} />
           )}}/>
-            <Tab.Screen name="MenuTab" component={MenuStack} options={{tabBarLabel:"Menu",tabBarIcon: () => (
-            <MaterialCommunityIcons name="menu" size={26} />
+            <Tab.Screen name="MenuTab" component={MenuStack} options={{tabBarLabel:"Menu",tabBarIcon: ({color}) => (
+            <MaterialCommunityIcons name="menu" size={26} color={color}/>
           )}}/>
         </Tab.Navigator>
     )
