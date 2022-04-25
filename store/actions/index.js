@@ -13,6 +13,9 @@ export const get_stores_action=()=>{
     return async (dispatch)=>{
 
         const response=await fetch(baseUrl+'store/getGeneralData',{
+            headers: {
+                "content-type": "application/json",
+            },
             method:'get',
 
         });
