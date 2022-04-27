@@ -1,43 +1,42 @@
-import {Text, View,ActivityIndicator,FlatList } from 'react-native'
-import React,{useCallback,useState,useEffect} from 'react'
-import { useDispatch , useSelector } from 'react-redux'
-import * as storeActions from '../../../store/actions'
-import Colors from '../../utilis/AppColors'
+import { Text, View, ActivityIndicator, FlatList, SafeAreaView, Platform, StatusBar } from 'react-native'
+import React from 'react'
+import { useSelector } from 'react-redux';
+
+import Stores from './../../components/Stores'
+import TopBar from './../../components/TopBar'
+import SearchInput from './../../components/Stores/searchInput';
+
+import Styles from './../../utilis/Styles'
 
 export const StoresScreen = (props) => {
 
-  const dispatch=useDispatch();
-  const[isLoading,setIsLoading]=useState(false);
-
-  const getAllStores=useCallback(async()=>{
-    let action=storeActions.get_stores_action()
-    setIsLoading(true);
-    try {
-      await dispatch(action);
-      setIsLoading(false);
-    } catch (error) {
-      setIsLoading(false)
-    }
-  },[setIsLoading,dispatch,storeActions.get_stores_action])
-
-  useEffect(()=>{
-    getAllStores();
-  },[getAllStores])
-
-  const allStores=useSelector((state)=>state.allStors)
-
-  console.log(JSON.stringify(allStores));
+  const allStores = useSelector((state) => state.allStores)
   return (
-    <View>
-      {
-        isLoading?(<ActivityIndicator size='large' color={Colors.happy_green} />):(<Text> Stores</Text>)
-      }
-    </View>
+    <SafeAreaView style={Styles.SafeAreaView}>
+      <View style={{paddingLeft:10}}>
+        <TopBar />
+        <SearchInput />
+        {
+          allStores.allStores.stores?.length > 0 ? (
+            <FlatList
+              data={allStores.allStores.stores}
+              numColumns={2}
+              keyExtractor={item => item._id}
+              renderItem={store => (<Stores store={store.item} />)}
+            />
+          ) :
+            (
+              <Text>No Stores</Text>
+            )
+        }
+      </View>
+
+    </SafeAreaView>
   )
 }
-export const screenOptions = navData=>{
+export const screenOptions = navData => {
   return {
-      headerTitle: 'Stores',
-      headerShown: false
+    headerTitle: 'Stores',
+    headerShown: false
   }
 }
