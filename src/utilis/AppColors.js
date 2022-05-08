@@ -10,5 +10,9 @@ export default {
     blue_back: '#E2F4FE',
     gray_text: '#455A64',
     light_green: '#a6d1d2',
+    gray:'#939393',
+    gray_2: '#2C2C2E',
+    gray_3: '#202022',
+    gray_4: '#77777a'
     
 }

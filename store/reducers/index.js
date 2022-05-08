@@ -1,25 +1,20 @@
-import { GET_STORES, GET_DATA_FROM_ASYNC_STORAGE } from "../actions";
+import storesReducers from './storesReducers'
+import userDataReducers from './userDataReducers'
+import { combineReducers } from 'redux';
 
-const initialState = {
-  allStores: [],
-  UserData: [],
-};
+const rootReducer = combineReducers({
+  allStores: storesReducers,
+  userData: userDataReducers,
+});
 
-export default (state = initialState, action) => {
-  switch (action.type) {
-    case GET_STORES:
-      return {
-        ...state,
-        allStores: action.data
-      };
-    case GET_DATA_FROM_ASYNC_STORAGE:
-      return {
-        ...state,
-        UserData: action.data
-      };
+export default rootReducer;
 
-    default:
-      return state;
-  }
-};
+
+
+
+
+
+
+
+
 

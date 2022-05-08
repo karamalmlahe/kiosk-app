@@ -1,14 +1,35 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
+import { View } from 'react-native'
 
 //icons
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
 
+//redux
+import { useSelector } from 'react-redux'
+
+import Colors from './../utilis/AppColors'
+
 //Screens
-import {DashboardScreen,screenOptions as DashboardScreenOptions} from "./../screens/dashboard";
-import {CartScreen,screenOptions as CartScreenOptions} from "./../screens/cart";
-import {StoresScreen,screenOptions as StoresScreenOptions} from "./../screens/stores";
-import {MenuScreen,screenOptions as MenuScreenOptions} from "./../screens/menu";
+//****************************************************************
+//Dashboard
+import { DashboardScreen, screenOptions as DashboardScreenOptions } from "./../screens/dashboard";
+
+//Stores
+import { StoresScreen, screenOptions as StoresScreenOptions } from "./../screens/stores";
+import { CategoriesScreen, screenOptions as CategoriesScreenOptions } from "./../screens/stores/storeCategories";
+
+
+//Cart
+import { CartScreen, screenOptions as CartScreenOptions } from "./../screens/cart";
+
+//Menu
+import { MenuScreen, screenOptions as MenuScreenOptions } from "./../screens/menu";
+
+// ***************************************************************
+
+
+
 
 //Stacks
 const DashboardStackNavigation = createStackNavigator();
@@ -20,40 +41,41 @@ const MenuStackNavigation = createStackNavigator();
 const TabsBottomNavigation = createMaterialBottomTabNavigator();
 
 //Dashboard Stack
-export const DashboardStack=()=>{
-    return(
+export const DashboardStack = () => {
+    return (
         <DashboardStackNavigation.Navigator>
-            <DashboardStackNavigation.Screen name="Dashboard" component={DashboardScreen} options={DashboardScreenOptions}/>
+            <DashboardStackNavigation.Screen name="Dashboard" component={DashboardScreen} options={DashboardScreenOptions} />
         </DashboardStackNavigation.Navigator>
     )
 }
 
 
 //Card Stack
-export const CardStack=()=>{
-    return(
+export const CardStack = () => {
+    return (
         <CardStackNavigation.Navigator>
-            <CardStackNavigation.Screen name="Cart" component={CartScreen} options={CartScreenOptions}/>
+            <CardStackNavigation.Screen name="Cart" component={CartScreen} options={CartScreenOptions} />
         </CardStackNavigation.Navigator>
     )
 }
 
 
 //Stores Stack
-export const StoresStack=()=>{
-    return(
+export const StoresStack = () => {
+    return (
         <StoreStackNavigation.Navigator>
-            <StoreStackNavigation.Screen name="Stores" component={StoresScreen} options={StoresScreenOptions}/>
+            <StoreStackNavigation.Screen name="Stores" component={StoresScreen} options={StoresScreenOptions} />
+            <StoreStackNavigation.Screen name="Categories" component={CategoriesScreen} options={CategoriesScreenOptions} />
         </StoreStackNavigation.Navigator>
     )
 }
 
 
 //Menu Stack
-export const MenuStack=()=>{
-    return(
+export const MenuStack = () => {
+    return (
         <MenuStackNavigation.Navigator>
-            <MenuStackNavigation.Screen name="Menu" component={MenuScreen} options={MenuScreenOptions}/>
+            <MenuStackNavigation.Screen name="Menu" component={MenuScreen} options={MenuScreenOptions} />
         </MenuStackNavigation.Navigator>
     )
 }
@@ -64,21 +86,39 @@ export const MenuStack=()=>{
 const Tab = createMaterialBottomTabNavigator();
 
 //Tap Material Bottom UI
-export const BottomTab=()=>{
-    return(
-        <Tab.Navigator shifting>
-            <Tab.Screen name="DashboardTab" component={DashboardStack} options={{tabBarLabel:"Dashboard",tabBarIcon: ({color}) => (
-            <MaterialCommunityIcons name="view-dashboard" size={26} color={color} />
-          )}}  />
-            <Tab.Screen name="StoresTab" component={StoresStack} options={{tabBarLabel:"Stores",tabBarIcon: ({color}) => (
-            <MaterialCommunityIcons name="storefront" size={26} color={color} />
-          )}}/>
-            <Tab.Screen name="CartTab" component={CardStack} options={{tabBarLabel:"Cart",tabBarIcon: ({color}) => (
-            <MaterialCommunityIcons name="cart" size={26} color={color} />
-          )}}/>
-            <Tab.Screen name="MenuTab" component={MenuStack} options={{tabBarLabel:"Menu",tabBarIcon: ({color}) => (
-            <MaterialCommunityIcons name="menu" size={26} color={color}/>
-          )}}/>
+export const BottomTab = () => {
+    const getIsDarkMode = useSelector((state) => state.userData.isDarkMode);
+    const backgroundColor =getIsDarkMode? Colors.gray_3 : Colors.white ;
+    const iconColorActive = getIsDarkMode? Colors.white : Colors.gray_2;
+    const iconColorinActive = getIsDarkMode? Colors.gray_4 : Colors.gray;
+    return (
+
+        <Tab.Navigator shifting
+            initialRouteName={'DashboardTab'}
+            activeColor={iconColorActive}
+            inactiveColor={iconColorinActive}
+            barStyle={{ backgroundColor: backgroundColor, height: '8.2%'}}>
+            <Tab.Screen name="DashboardTab" component={DashboardStack}  options={{labelStyle:{ margin:0, padding:0,color:'red' },iconStyle: { height: 300, width: 300 },
+                tabBarLabel: null, tabBarIcon: ({ color }) => (
+                    <View style={{height:40,width:40}}><MaterialCommunityIcons name="view-dashboard" size={30} color={color} /></View>
+                )
+            }} />
+            <Tab.Screen name="StoresTab" component={StoresStack} options={{
+                tabBarLabel: null, tabBarIcon: ({ color }) => (
+                    <View style={{height:40,width:40}}><MaterialCommunityIcons name="storefront" size={30} color={color} /></View>
+                )
+            }} />
+            <Tab.Screen name="CartTab" component={CardStack} options={{
+                tabBarLabel: null, tabBarIcon: ({ color }) => (
+                    <View style={{height:40,width:40}}><MaterialCommunityIcons name="cart" size={30} color={color} /></View>
+                )
+            }} />
+            <Tab.Screen name="MenuTab" component={MenuStack} options={{
+                tabBarLabel: null, tabBarIcon: ({ color }) => (
+                    <View style={{height:40,width:40}}><MaterialCommunityIcons name="menu" size={30} color={color} /></View>
+                )
+            }} />
         </Tab.Navigator>
+
     )
 }
