@@ -3,7 +3,7 @@ import userDataReducers from './userDataReducers'
 import { combineReducers } from 'redux';
 
 const rootReducer = combineReducers({
-  allStores: storesReducers,
+  storesData: storesReducers,
   userData: userDataReducers,
 });
 

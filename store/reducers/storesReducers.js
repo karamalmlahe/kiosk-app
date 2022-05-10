@@ -1,7 +1,8 @@
-import { GET_STORES } from "../actions/actionsTypes";
+import { GET_STORES,GET_CATEGORIES_WITH_PRODUCTS_BY_ID_STORE } from "../actions/actionsTypes";
 
 const initialState = {
     allStores: [],
+    categoriesWithProductsOfStore:[]
 };
 
 export default (state = initialState, action) => {
@@ -11,6 +12,11 @@ export default (state = initialState, action) => {
           ...state,
           allStores: action.data
         };
+        case GET_CATEGORIES_WITH_PRODUCTS_BY_ID_STORE:
+          return {
+            ...state,
+            categoriesWithProductsOfStore: action.data
+          };
   
       default:
         return state;

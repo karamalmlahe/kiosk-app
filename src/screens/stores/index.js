@@ -21,7 +21,7 @@ export const StoresScreen = (props) => {
   //redux
 
   const getIsDarkMode = useSelector((state) => state.userData.isDarkMode);
-  const allStores = useSelector((state) => state.allStores?.allStores);
+  const allStores = useSelector((state) => state.storesData?.allStores);
 
   //darkMode
   const backgroundColor = getIsDarkMode ? Colors.gray_2 : Colors.white;

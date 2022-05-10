@@ -15,7 +15,7 @@ export default StyleSheet.create({
 
     },
     TitleView: {
-        width: '85%',
+        width: '80%',
         height: '100%',
         paddingHorizontal: 5,
         justifyContent: 'center',
@@ -23,5 +23,17 @@ export default StyleSheet.create({
     TitleText: {
         fontSize: 23,
         fontFamily: 'Cairo-SemiBold',
+    },
+    StoreStatus:{
+        width: '5%',
+        height: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+
+    },
+    Circle:{
+        borderRadius:50,
+        height: 15,
+        width: 15,
     }
 })

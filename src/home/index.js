@@ -55,19 +55,17 @@ const BottomTabComponent = (props) => {
         }
     }, [setIsLoading, dispatch, storeActions.get_is_darkMode_action])
 
+    
+   
+
+
 
     const isDarkModeSelector = useSelector((state) => state.userData?.isDarkMode);
     const backgroundColor = isDarkModeSelector ? Colors.white : Colors.gray_2;
-
     useEffect(async () => {
         await getisDarkModeDispatch();
         await getAllStoresDispatch();
         await getUserDataDispatch();
-        // setIsDarkMode(isDarkModeSelector)
-        // if (isDarkMode)
-        //     console.log("is dark mode");
-        // else
-        //     console.log("not dark mode");
     }, [])
 
 

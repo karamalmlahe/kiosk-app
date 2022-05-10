@@ -27,7 +27,7 @@ const Stores = (props) => {
     const backgroundColor =getIsDarkMode? Colors.gray_3 : Colors.gray_10 ;
     const fontColor = getIsDarkMode? Colors.white : Colors.black;
     
-    const dataNav={ storeName: props.store.storeName,storeLogo:props.store.logo ,storeDescription:props.store.storeDescription,workingHours:props.store.workingHours}
+    const dataNav={id:props.store._id, storeName: props.store.storeName,storeLogo:props.store.logo ,storeDescription:props.store.storeDescription,workingHours:props.store.workingHours,contactInfo:props.store.contactInfo}
     return (
         <>
             {

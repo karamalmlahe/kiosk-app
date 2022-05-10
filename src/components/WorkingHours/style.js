@@ -3,11 +3,12 @@ import Colors from './../../utilis/AppColors'
 
 export default StyleSheet.create({
     Container: {
+
     },
     ContainerText:{
         fontSize:12.5,
         lineHeight:20,
-        fontFamily: 'Cairo-Medium'
+        fontFamily: 'Cairo-Medium',
     },
     Title:{
         flexDirection: 'row',
@@ -19,5 +20,7 @@ export default StyleSheet.create({
         fontFamily: 'Cairo-Light',
         fontSize:12.5,
         lineHeight:18,
+    },
+    FlatListContainer:{
     }
 })
