@@ -1,121 +1,109 @@
-import { ScrollView, Text, View, SafeAreaView, Image, FlatList, TouchableOpacity, Linking, Alert, Dimensions, ActivityIndicator } from 'react-native'
+import { ScrollView, Text, View, SafeAreaView, Image, FlatList, TouchableOpacity, ActivityIndicator, RefreshControl, Animated } from 'react-native'
 import React, { useEffect, useState, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import * as storeActions from '../../../store/actions'
+// import { ScrollView } from 'react-native-virtualized-view';
 // import WavyBackground from "react-native-wavy-background";
 import Styles from './style'
 import Colors from './../../utilis/AppColors'
-import { showLocation } from 'react-native-map-link'
+import StoreInfo from './../../components/Stores/storeInfo'
+import Product from './../../components/Stores/product'
 
 
 //icons
-import Ionicons from "react-native-vector-icons/Ionicons"
-import Entypo from "react-native-vector-icons/Entypo"
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
 
 import TopBarBackNav from '../../components/TopBarBackNav';
-import WorkingHours from '../../components/WorkingHours'
+
+//functions
+import { reduceTextSize, formatter } from './../../publicFuncs'
+
+import ButtonShowAllProduct from '../../components/Stores/buttonShowAllProducts'
+
 
 export const CategoriesScreen = (props) => {
   const getIsDarkMode = useSelector((state) => state.userData.isDarkMode);
   const [isStoreOpen, setStoreOpen] = useState();
   const [isLoading, setIsLoading] = useState(false);
-  const windowWidth = Dimensions.get('window').width;
+  const [refreshing, setRefreshing] = useState(false);
+  const [categoriesWithProducts, setCategoriesWithProducts] = useState({});
+
   //darkMode
   const backgroundColor = getIsDarkMode ? Colors.gray_2 : Colors.white;
   const backgroundColor2 = getIsDarkMode ? Colors.gray_3 : Colors.gray_10;
-  const backgroundColor3 = getIsDarkMode ? Colors.gray_2 : Colors.white;
+  const backgroundColor3 = getIsDarkMode ? Colors.gray_2 : '#fffffb';
   const fontColor = getIsDarkMode ? Colors.white : Colors.gray_2;
 
   //redux
   const dispatch = useDispatch();
   const getCategoriesWithProductsByStoreId = useCallback(async () => {
     let CategoriesWithProducts = storeActions.get_CategoriesWithProductsByStoreId_action(props.route.params.id);
-    setIsLoading(true);
     try {
       await dispatch(CategoriesWithProducts);
-      setIsLoading(false);
+      setCategoriesWithProducts(getCategoriesWithProducts)
+
     } catch (error) {
       console.log(error);
-      setIsLoading(false);
+
     }
-  }, [setIsLoading, dispatch, storeActions.get_CategoriesWithProductsByStoreId_action(props.route.params.id)])
+  }, [dispatch, storeActions.get_CategoriesWithProductsByStoreId_action(props.route.params.id)])
 
   const getCategoriesWithProducts = useSelector((state) => state.storesData?.categoriesWithProductsOfStore);
-  // console.log('====================================');
-  // console.log(getCategoriesWithProducts.categories[5].products);
-  // console.log('====================================');
-  useEffect(() => {
-    getCategoriesWithProductsByStoreId();
+
+
+
+  useEffect(async () => {
+    setIsLoading(true);
+    await getCategoriesWithProductsByStoreId();
+    setIsLoading(false);
   }, [])
   const contactInfo = props.route.params.contactInfo;
 
-  const Linked = () => {
-    Linking.canOpenURL(`mailto:${contactInfo.email}`)
-      .then(supported => {
-        if (!supported) {
-          return Alert.alert(
-            "Kiosk App",
-            "Your device does not support",
-          );
-        } else {
-          return Linking.openURL(`mailto:${contactInfo.email}`)
-        }
-      })
-      .catch(err => {
-        console.error('An error occurred', err)
-      })
+
+  const reduceArraySize = (array, size) => {
+    if (array.length > size) {
+      return array.slice(0, size)
+    }
+    return array
   }
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await getCategoriesWithProductsByStoreId();
+    setRefreshing(false);
+  }
+
+
+
+
+
+
   return (
     <SafeAreaView style={[Styles.SafeAreaView, { backgroundColor: backgroundColor2 }]}>
       <View style={[Styles.Container, { backgroundColor: backgroundColor }]}>
         <View style={[Styles.TopBarInfo, { backgroundColor: backgroundColor2 }]}>
           <TopBarBackNav navigation={props.navigation} fontColor={fontColor} storeName={props.route.params.storeName} isStoreOpen={isStoreOpen} />
         </View>
-        <ScrollView style={{ backgroundColor: backgroundColor2 }} >
-          <View style={[Styles.StoreInfo, { backgroundColor: backgroundColor2 }]}>
-            <View style={{ height: 'auto', flexDirection: 'row' }}>
-              <View style={[Styles.StoreImgView, { backgroundColor: backgroundColor3 }]}>
-                <Image
-                  style={Styles.StoreImg}
-                  resizeMode={'cover'}
-                  source={{ uri: props.route.params.storeLogo }}
-                />
-              </View>
-              <View style={Styles.StoreDescription}>
-                <Text style={[Styles.StoreDescriptionText, { color: fontColor }]}>Description : {"\n"}<Text style={{ fontFamily: 'Cairo-Light' }}>{props.route.params.storeDescription}</Text></Text>
-                <Text style={[Styles.StoreDescriptionText, { color: fontColor }]}>Address : {"\n"}<Text style={{ fontFamily: 'Cairo-Light' }}>{contactInfo.address} | {contactInfo.city}</Text></Text>
-                {
-                  props.route.params.workingHours?.length > 0 ? (<WorkingHours workingHours={props.route.params.workingHours} fontColor={fontColor} setStoreOpen={setStoreOpen} />) : (<></>)
-                }
 
-              </View>
-            </View>
+        <ScrollView style={{ backgroundColor: backgroundColor }} refreshControl={
+          <RefreshControl
+            style={{ backgroundColor: backgroundColor2 }}
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            tintColor={fontColor}
+          />
+        }
+        >
+          <StoreInfo
+            setStoreOpen={setStoreOpen}
+            storeLogo={props.route.params.storeLogo}
+            workingHours={props.route.params.workingHours}
+            storeDescription={props.route.params.storeDescription}
+            backgroundColor2={backgroundColor2}
+            backgroundColor3={backgroundColor3}
+            fontColor={fontColor}
+            contactInfo={contactInfo} />
+          <View style={{ backgroundColor: backgroundColor }}>
 
-            <View style={{ flexDirection: 'row', width: '100%', paddingTop: 10, justifyContent: 'space-between' }}>
-              <TouchableOpacity onPress={() => Linking.openURL(`tel:${contactInfo.mobile}`)}>
-                <View style={[Styles.infoIcons, { backgroundColor: Colors.light_green }]}>
-                  <Ionicons name="call" size={28} color={fontColor} />
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={Linked}>
-                <View style={[Styles.infoIcons, { backgroundColor: Colors.light_blue }]}>
-                  <Entypo name="mail" size={28} color={fontColor} />
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => showLocation({
-                latitude: contactInfo.latitude,
-                longitude: contactInfo.longtitude,
-              })
-              } >
-                <View style={[Styles.infoIcons, { backgroundColor: Colors.wazeBack }]}>
-                  <MaterialCommunityIcons name="waze" size={28} color={fontColor} />
-                </View>
-              </TouchableOpacity>
-
-            </View>
-          </View>
-          <View style={{ flex: 1, backgroundColor: backgroundColor }}>
             {
               isLoading ?
                 (
@@ -127,59 +115,51 @@ export const CategoriesScreen = (props) => {
                 (
                   getCategoriesWithProducts.categories ?
                     (
-                      <View style={{ flex: 1, paddingVertical: 20, paddingHorizontal: 10 }}>
-                        <FlatList
-                          scrollEnabled={false}
-                          data={getCategoriesWithProducts.categories}
-                          keyExtractor={item => item.category._id}
-                          renderItem={category => (
-
-                            category.item.products.length > 0 ? (<View style={Styles.FlatListCategory}>
+                      <View style={{ flex: 1, paddingVertical: 20 }}>
+                        {
+                          getCategoriesWithProducts.categories?.map((category, index) =>
+                            category.products.length > 0 ? (<View style={Styles.FlatListCategory} key={index}>
                               <View style={Styles.CategoryDetails}>
-                                <Text style={[Styles.categoryName, { color: fontColor }]}>{category.item.category.categoryName?.toUpperCase()}</Text>
-                                <Text style={Styles.MoreProductsLink}>View All </Text>
+                                <Text style={[Styles.categoryName, { color: fontColor }]}>{category.category.categoryName?.toUpperCase()}</Text>
                               </View>
-
                               <View style={Styles.ProductsContainer}>
-                                <FlatList
+                                <ScrollView
+                                  disableIntervalMomentum
                                   horizontal
-                                  data={category.item.products}
-                                  keyExtractor={index => index._id}
-                                  renderItem={product => (
-                                    <View style={[Styles.FlatListProudct, { backgroundColor: backgroundColor2 }]}>
-                                      <View style={[Styles.productImgContainer]}>
-                                        <Image
-                                          style={Styles.productImg}
-                                          resizeMode={'cover'}
-                                          source={{ uri: product.item.productImages[0].imageSource }}
-                                        />
-                                      </View>
-                                      <Text style={[Styles.proudctName, { color: fontColor }]}>{product.item.productName}</Text>
-                                    </View>
+                                  showsHorizontalScrollIndicator={false}
+                                  style={{ flexDirection: 'row' }}>
+                                  {
+                                    reduceArraySize(category.products, 3).map((product, index) => (
 
-                                  )}
-                                />
+                                      <TouchableOpacity style={[Styles.FlatListProudct, { backgroundColor: backgroundColor2 }]} key={index} onPress={() => props.navigation.navigate('Product', { productImage: product.productImages, productName: product.productName, productPrice: product.price })}>
+                                        <Product fontColor={fontColor} productImage={product.productImages[0].imageSource} productName={product.productName} productPrice={product.price} />
+                                      </TouchableOpacity>
+                                    ))
+                                  }
+                                  {
+                                    reduceArraySize(category.products, 3)?.length != category.products?.length ?
+                                      (
+                                        <TouchableOpacity onPress={() => props.navigation.navigate("Products", { storeName: props.route.params.storeName, isStoreOpen: isStoreOpen, data: getCategoriesWithProducts.categories?.find((c) => c.category._id == category.category._id) })}>
+                                          <ButtonShowAllProduct backgroundColor2={backgroundColor2} fontColor={fontColor} />
+                                        </TouchableOpacity>)
+                                      :
+                                      (<></>)
+                                  }
+
+                                </ScrollView>
                               </View>
-                            </View>) : (<></>)
-
-
-
+                            </View>) : (<View key={index}></View>)
                           )}
-
-                        />
                       </View>
-
-                      // <Text>{getCategoriesWithProducts.categories[0].categoryName}</Text>
                     )
                     :
                     (
-                      <></>
+                      < ></>
                     )
                 )
             }
 
           </View>
-
         </ScrollView>
       </View>
 
@@ -212,3 +192,58 @@ export const screenOptions = navData => {
             bottom
           />
         </View> */}
+
+
+
+        // {
+        //   getCategoriesWithProducts.categories.map((category, index) =>
+        //   (
+        //     <View key={index}>
+        //       {
+        //         category.products.length > 0 ? (<View style={Styles.FlatListCategory} >
+        //           <View style={Styles.CategoryDetails}>
+        //             <Text style={[Styles.categoryName, { color: fontColor }]}>{category.category.categoryName?.toUpperCase()}</Text>
+        //           </View>
+
+        //           <View style={Styles.ProductsContainer}>
+
+        //             <FlatList
+
+        //               ListFooterComponent={
+        //                 reduceArraySize(category.products, 3)?.length != category.products.length ?
+        //                   <ButtonShowAllProduct backgroundColor={backgroundColor} backgroundColor2={backgroundColor2} fontColor={fontColor} />
+        //                   : (<></>)}
+        //               showsHorizontalScrollIndicator={false}
+        //               horizontal
+        //               data={reduceArraySize(category.products, 3)}
+        //               keyExtractor={index => index._id}
+        //               renderItem={product => (
+        //                 <View style={[Styles.FlatListProudct, { backgroundColor: backgroundColor2 }]}>
+        //                   <Image
+        //                     style={Styles.productImg}
+        //                     resizeMode={'cover'}
+        //                     source={{ uri: product.item.productImages[0].imageSource }}
+        //                   />
+        //                   <View style={[Styles.productInfo]}>
+        //                     <View style={[Styles.productInfoNamePrice]}>
+        //                       <Text style={[Styles.proudctName, { color: fontColor }]}>{reduceTextSize(product.item.productName, 12)}</Text>
+        //                       <Text style={[Styles.proudctPrice]}>{formatter.format(product.item.price)}</Text>
+        //                     </View>
+        //                     <View style={[Styles.productInfoAddToCart]}>
+        //                       <TouchableOpacity style={[Styles.AddToCart]}>
+        //                         <FontAwesome5 name="cart-plus" size={15} color={fontColor} />
+        //                       </TouchableOpacity>
+        //                     </View>
+
+        //                   </View>
+        //                 </View>
+
+        //               )}
+        //             />
+        //           </View>
+        //         </View>) : (<></>)
+        //       }
+
+        //     </View>
+        //   ))
+        // }

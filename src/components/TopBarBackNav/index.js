@@ -1,7 +1,6 @@
-import { Text, View, TouchableOpacity } from 'react-native'
+import {StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import React from 'react'
 import MaterialIcons from "react-native-vector-icons/MaterialIcons"
-import Styles from './style'
 import Colors from './../../utilis/AppColors'
 
 const TopBarBackNav = (props) => {
@@ -23,5 +22,40 @@ const TopBarBackNav = (props) => {
         </View>
     )
 }
+const Styles = StyleSheet.create({
+    Container: {
+        flex: 1,
+        alignItems: 'center',
+        flexDirection: 'row',
+    },
+    BackButton: {
+        height:'100%',
+        paddingHorizontal: 18,
+        justifyContent: 'center',
+        width: '12%',
 
+    },
+    TitleView: {
+        width: '80%',
+        height: '100%',
+        paddingHorizontal: 5,
+        justifyContent: 'center',
+    },
+    TitleText: {
+        fontSize: 23,
+        fontFamily: 'Cairo-SemiBold',
+    },
+    StoreStatus:{
+        width: '5%',
+        height: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+
+    },
+    Circle:{
+        borderRadius:50,
+        height: 15,
+        width: 15,
+    }
+})
 export default TopBarBackNav

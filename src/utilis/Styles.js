@@ -3,9 +3,9 @@ import Colors from './AppColors';
 
 export default StyleSheet.create({
     //SafeAreaView for Android
-    SafeAreaView: {
-        paddingTop: (Platform.OS === "android" ? StatusBar.currentHeight - 10 : 0),
-    },
+    // SafeAreaView: {
+    //     paddingTop: (Platform.OS === "android" ? StatusBar.currentHeight - 10 : 0),
+    // },
 
     //TopBar
     TopBarView: {
@@ -28,12 +28,12 @@ export default StyleSheet.create({
     //Search Input
     searchInputView: {
         marginRight: 10,
-        width: '90%',
+        width: '99%',
         alignSelf: 'center',
         flexDirection: 'row',
         borderWidth: 0.8,
         borderColor: Colors.gray,
-        paddingVertical: 8,
+        paddingVertical: 10,
         borderRadius: 15,
         height: '90%',
 
@@ -66,9 +66,7 @@ export default StyleSheet.create({
         width: '45%',
         backgroundColor: Colors.gray_10,
         height: 210,
-
-        marginLeft: 10,
-        marginRight: 10,
+        marginHorizontal: 10,
         marginVertical: 12,
         borderRadius: 12,
         paddingHorizontal: 15,
@@ -83,11 +81,17 @@ export default StyleSheet.create({
         elevation: 9,
         justifyContent: "center",
     },
-    StoreImg: {
+    StoreImgView:{
         height: 130,
         width: 130,
+        alignItems: 'center',
+        alignSelf:'center',
+        justifyContent: 'center',
+    },
+    StoreImg: {
+        height:'100%',
+        width:'100%',
         borderRadius: 360,
-        alignSelf: 'center'
     },
     StoreInfo: {
         width: '82%',

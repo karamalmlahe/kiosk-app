@@ -18,6 +18,8 @@ import { DashboardScreen, screenOptions as DashboardScreenOptions } from "./../s
 //Stores
 import { StoresScreen, screenOptions as StoresScreenOptions } from "./../screens/stores";
 import { CategoriesScreen, screenOptions as CategoriesScreenOptions } from "./../screens/stores/storeCategories";
+import { ProductsScreen, screenOptions as ProductsScreenOptions } from "./../screens/stores/storeProducts";
+import { ProductScreen, screenOptions as ProductScreenOptions } from "./../screens/Product";
 
 
 //Cart
@@ -66,6 +68,8 @@ export const StoresStack = () => {
         <StoreStackNavigation.Navigator>
             <StoreStackNavigation.Screen name="Stores" component={StoresScreen} options={StoresScreenOptions} />
             <StoreStackNavigation.Screen name="Categories" component={CategoriesScreen} options={CategoriesScreenOptions} />
+            <StoreStackNavigation.Screen name="Products" component={ProductsScreen} options={ProductsScreenOptions} />
+            <StoreStackNavigation.Screen name="Product" component={ProductScreen} options={ProductScreenOptions} />
         </StoreStackNavigation.Navigator>
     )
 }

@@ -23,7 +23,7 @@ const SearchInput = (props) => {
             placeholderTextColor={fontColor}
             onChangeText={val => props.setSearch(val)}
             value={props.searchText}
-            placeholder="Search here"
+            placeholder={props.placeholder}
             keyboardType="default"
           />
           <View style={Styles.searchInputClearIcon}>

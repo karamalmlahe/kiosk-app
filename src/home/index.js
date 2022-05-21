@@ -1,4 +1,4 @@
-import { View, TouchableOpacity } from 'react-native'
+import { View, TouchableOpacity, StatusBar } from 'react-native'
 import React, { useCallback, useState, useEffect } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 //redux
@@ -55,8 +55,8 @@ const BottomTabComponent = (props) => {
         }
     }, [setIsLoading, dispatch, storeActions.get_is_darkMode_action])
 
-    
-   
+
+
 
 
 
@@ -81,6 +81,11 @@ const BottomTabComponent = (props) => {
     }
     return (
         <>
+            <StatusBar
+                barStyle={isDarkModeSelector ? 'light-content' : 'dark-content'}
+                backgroundColor={isDarkModeSelector ? Colors.gray_2 : Colors.white}
+
+            />
             {
                 isLoading ? (<LoadingScreen />) : (<>
                     <NavigationContainer>
