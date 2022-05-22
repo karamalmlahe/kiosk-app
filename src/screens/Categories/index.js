@@ -107,7 +107,7 @@ export const CategoriesScreen = (props) => {
             {
               isLoading ?
                 (
-                  <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                  <View style={{  justifyContent: 'center', alignItems: 'center',height: '100%'}}>
                     <ActivityIndicator size={'large'} color={fontColor} />
                   </View>
                 )
