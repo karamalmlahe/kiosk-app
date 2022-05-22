@@ -17,8 +17,8 @@ import { DashboardScreen, screenOptions as DashboardScreenOptions } from "./../s
 
 //Stores
 import { StoresScreen, screenOptions as StoresScreenOptions } from "./../screens/stores";
-import { CategoriesScreen, screenOptions as CategoriesScreenOptions } from "./../screens/stores/storeCategories";
-import { ProductsScreen, screenOptions as ProductsScreenOptions } from "./../screens/stores/storeProducts";
+import { CategoriesScreen, screenOptions as CategoriesScreenOptions } from "../screens/Categories";
+import { ProductsScreen, screenOptions as ProductsScreenOptions } from "../screens/Products";
 import { ProductScreen, screenOptions as ProductScreenOptions } from "./../screens/Product";
 
 

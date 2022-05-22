@@ -7,7 +7,7 @@ import Stores from './../../components/Stores'
 import TopBar from './../../components/TopBarUserInfo'
 import SearchInput from './../../components/Stores/searchInput';
 
-import Styles from './../../utilis/Styles';
+import Styles from './style';
 import Colors from './../../utilis/AppColors'
 
 export const StoresScreen = (props) => {

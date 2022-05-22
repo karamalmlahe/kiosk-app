@@ -42,31 +42,4 @@ export default StyleSheet.create({
         width:windowWidth/2.12,
         borderRadius:8,
     },
-
-
-
-    //Products Page
-    CategoryImg:{
-        width:windowWidth,
-        height:windowWidth/2.2,
-    },
-    CategoryImgAndName:{
-        width:windowWidth,
-        height:windowWidth/2.2,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    CategoryViewUp:{
-        width:windowWidth,
-        height:windowWidth/2.2,
-        backgroundColor:'#00000099',
-        position: 'absolute',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    CategoryName:{
-        fontFamily: 'Cairo-Medium',
-        fontSize:30,
-        color: "#ffffff",
-    }
 })

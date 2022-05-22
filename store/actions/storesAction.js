@@ -1,5 +1,5 @@
 import { GET_STORES, GET_CATEGORIES_WITH_PRODUCTS_BY_ID_STORE } from './actionsTypes'
-const baseUrl = 'http://192.168.14.191:5090/api/';
+const baseUrl = 'http://10.70.2.140:5090/api/';
 //GET_STORES
 export const get_stores_dispatch = (data) => {
     return dispatch => {

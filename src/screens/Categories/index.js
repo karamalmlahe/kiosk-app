@@ -1,13 +1,13 @@
-import { ScrollView, Text, View, SafeAreaView, Image, FlatList, TouchableOpacity, ActivityIndicator, RefreshControl, Animated } from 'react-native'
+import { ScrollView, Text, View, SafeAreaView,TouchableOpacity, ActivityIndicator, RefreshControl } from 'react-native'
 import React, { useEffect, useState, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import * as storeActions from '../../../store/actions'
 // import { ScrollView } from 'react-native-virtualized-view';
 // import WavyBackground from "react-native-wavy-background";
 import Styles from './style'
-import Colors from './../../utilis/AppColors'
-import StoreInfo from './../../components/Stores/storeInfo'
-import Product from './../../components/Stores/product'
+import Colors from '../../utilis/AppColors'
+import StoreInfo from '../../components/Stores/storeInfo'
+import Product from '../../components/Stores/product'
 
 
 //icons
@@ -16,7 +16,7 @@ import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
 import TopBarBackNav from '../../components/TopBarBackNav';
 
 //functions
-import { reduceTextSize, formatter } from './../../publicFuncs'
+import { reduceTextSize, formatter } from '../../publicFuncs'
 
 import ButtonShowAllProduct from '../../components/Stores/buttonShowAllProducts'
 

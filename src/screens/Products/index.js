@@ -1,13 +1,13 @@
 import { Text, View, SafeAreaView, ScrollView, FlatList, TouchableOpacity, RefreshControl } from 'react-native'
 import React, { useState, useCallback, useEffect } from 'react'
 import Styles from './style'
-import Colors from './../../utilis/AppColors'
+import Colors from '../../utilis/AppColors'
 import { useDispatch, useSelector } from 'react-redux'
 import * as storeActions from '../../../store/actions'
-import TopBarBackNav from './../../components/TopBarBackNav';
-import SearchInput from './../../components/Stores/searchInput'
-import Product from './../../components/Stores/product'
-import ImageComponent from './../../components/image'
+import TopBarBackNav from '../../components/TopBarBackNav';
+import SearchInput from '../../components/Stores/searchInput'
+import Product from '../../components/Stores/product'
+import ImageComponent from '../../components/image'
 // import { ImageHeaderScrollView, TriggeringView } from 'react-native-image-header-scroll-view';
 
 export const ProductsScreen = (props) => {
@@ -69,7 +69,7 @@ export const ProductsScreen = (props) => {
                             source={{ uri: Category.category?.categoryImage }}
                             fontColor={fontColor} />
                         <View style={Styles.CategoryViewUp}>
-                            <Text style={Styles.CategoryName}> {props.route.params.categoryName}</Text>
+                            <Text style={Styles.CategoryName}> {Category.category.categoryName}</Text>
                         </View>
                     </View>
                     <View style={{ paddingLeft: 12, backgroundColor: 'white', height: 67, justifyContent: 'center', backgroundColor: backgroundColor, paddingVertical: 5 }} >

@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-const baseUrl = 'http://192.168.14.191:5090/api/';
+const baseUrl = 'http://10.70.2.140:5090/api/';
 import { GET_IS_DARK_MODE , GET_DATA_FROM_ASYNC_STORAGE } from './actionsTypes'
 
 // GET_DATA_FROM_ASYNC_STORAGE
